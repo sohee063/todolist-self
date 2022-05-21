@@ -1,0 +1,145 @@
+body {
+  margin: 0;
+  background-image: url("https://swall.teahub.io/photos/small/95-958090_minimalistic-simple-background-trees-white-background-nice-and.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Poor Story", cursive;
+  display: flex;
+  justify-content: center;
+  color: #121212;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.5);
+  min-height: 100vh;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  width: 80vw;
+  padding: 10px;
+}
+
+.input-area {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.input-area input {
+  width: 500px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 1px -2px, rgba(0, 0, 0, 0.14) 0 2px 2px 0,
+    rgba(0, 0, 0, 0.12) 0 1px 5px 0;
+}
+
+.task-board {
+  background-color: aliceblue;
+}
+
+.enter {
+  margin-left: 5px;
+  align-items: center;
+  appearance: none;
+  border-radius: 4px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 1px -2px, rgba(0, 0, 0, 0.14) 0 2px 2px 0,
+    rgba(0, 0, 0, 0.12) 0 1px 5px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: Roboto, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  height: 30px;
+  justify-content: center;
+  letter-spacing: 0.0892857em;
+  line-height: normal;
+  min-width: 40px;
+  outline: none;
+  overflow: visible;
+  padding: 0 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  will-change: transform, opacity;
+}
+
+.enter:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0 2px 4px -1px, rgba(0, 0, 0, 0.14) 0 4px 5px 0,
+    rgba(0, 0, 0, 0.12) 0 1px 10px 0;
+}
+
+.enter:disabled {
+  background-color: rgba(0, 0, 0, 0.12);
+  box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 0, rgba(0, 0, 0, 0.14) 0 0 0 0,
+    rgba(0, 0, 0, 0.12) 0 0 0 0;
+  color: rgba(0, 0, 0, 0.37);
+  cursor: default;
+  pointer-events: none;
+}
+
+.enter:not(:disabled) {
+  background-color: #6200ee;
+}
+
+.enter:focus {
+  box-shadow: rgba(0, 0, 0, 0.2) 0 2px 4px -1px, rgba(0, 0, 0, 0.14) 0 4px 5px 0,
+    rgba(0, 0, 0, 0.12) 0 1px 10px 0;
+}
+
+.enter:active {
+  box-shadow: rgba(0, 0, 0, 0.2) 0 5px 5px -3px,
+    rgba(0, 0, 0, 0.14) 0 8px 10px 1px, rgba(0, 0, 0, 0.12) 0 3px 14px 2px;
+  background: #a46bf5;
+}
+
+.task-area {
+  border: 1px solid #001d6e;
+}
+
+.task-tabs {
+  display: flex;
+  border-bottom: 1px solid #001d6e;
+  position: relative;
+  background-color: #eff8ff;
+}
+
+.task-tabs div {
+  padding: 1em;
+}
+
+#under-line {
+  height: 4px;
+  background-color: #6200ee;
+  position: absolute;
+  width: 60px;
+  left: 0px;
+  top: 48px;
+  padding: 0px;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  display: flex;
+  position: relative;
+  font-size: 17px;
+
+  background-color: #eff8ff;
+}
+
+.task-done {
+  display: flex;
+  text-decoration: line-through;
+  color: #676fa3;
+  padding: 0;
+  flex-grow: 1;
+}
