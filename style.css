@@ -119,10 +119,11 @@ body {
   height: 4px;
   background-color: #6200ee;
   position: absolute;
+  /* left: 0; */
   width: 60px;
-  left: 0px;
   top: 48px;
   padding: 0px;
+  transition: 0.5s;
 }
 
 .task {
@@ -133,7 +134,6 @@ body {
   display: flex;
   position: relative;
   font-size: 17px;
-
   background-color: #eff8ff;
 }
 
