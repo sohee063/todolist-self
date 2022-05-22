@@ -1,11 +1,24 @@
 let addButton = document.getElementById("add-button");
 let taskInput = document.getElementById("task-input");
-let tabs = document.querySelectorAll(".task-tabs div");
+let tabs = document.querySelectorAll(".task-tabs a");
 let mode = "all";
 let filterList = [];
 let taskList = [];
 
-for (let i = 1; i < tabs.length; i++) {
+let horizontalUnderLine = document.getElementById("under-line");
+
+tabs.forEach((menu) => menu.addEventListener("click", (e) => tabsIndicator(e)));
+
+function tabsIndicator(e) {
+  console.log("그냥타겟", e.target);
+  console.log("커런트타겟", e.currentTarget);
+  horizontalUnderLine.style.left = e.target.offsetLeft + "px";
+  horizontalUnderLine.style.width = e.target.offsetWidth + "px";
+  horizontalUnderLine.style.top =
+    e.currentTarget.offsetTop + e.currentTarget.offsetHeight - 4 + "px";
+}
+
+for (let i = 0; i < tabs.length; i++) {
   tabs[i].addEventListener("click", function (event) {
     filter(event);
   });

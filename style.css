@@ -110,7 +110,7 @@ body {
   background-color: #eff8ff;
 }
 
-.task-tabs div {
+.task-tabs a {
   padding: 1em;
   cursor: pointer;
 }
