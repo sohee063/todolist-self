@@ -7,17 +7,20 @@
 
 let addButton = document.getElementById("add-button");
 let taskInput = document.getElementById("task-input");
-let allTask = document.getElementById("all");
-let doingTask = document.getElementById("doing");
-let finishedTask = document.getElementById("finished");
+let tabs = document.querySelectorAll(".task-tabs div");
+let mode = "all";
+let filterList = [];
 let taskList = [];
-let doingArr = [];
-let finishedArr = [];
+
+for (let i = 1; i < tabs.length; i++) {
+  tabs[i].addEventListener("click", function (event) {
+    filter(event);
+  });
+}
 addButton.addEventListener("click", addTask);
 let checkBtn = document.getElementById("checked");
-allTask.addEventListener("click", allTaskList);
-doingTask.addEventListener("click", doingTaskList);
-finishedTask.addEventListener("click", finishedTaskList);
+taskInput.addEventListener("focus", blank);
+taskInput.addEventListener("keypress", enter);
 
 function addTask() {
   let task = {
@@ -30,23 +33,30 @@ function addTask() {
 }
 
 function render() {
+  let list = [];
+  if (mode === "all") {
+    list = taskList;
+  } else if (mode === "ongoing" || mode === "done") {
+    list = filterList;
+  }
+
   let resultHTML = "";
-  for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].isComplete === true) {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].isComplete) {
       resultHTML += `<div class="task">
-        <div class="task-done">${taskList[i].taskContent}</div>
+        <div class="task-done">${list[i].taskContent}</div>
        
         <div>
-          <button onclick="toggleComplete('${taskList[i].id}')" id="done" class="enter"><i class="fa-solid fa-arrow-rotate-right"></i></button>
-          <button onclick="deleteTask('${taskList[i].id}')" class="enter"><i class="fa-solid fa-trash-can"></i></button>
+          <button onclick="toggleComplete('${list[i].id}')" id="done" class="enter"><i class="fa-solid fa-arrow-rotate-right"></i></button>
+          <button onclick="deleteTask('${list[i].id}')" class="enter"><i class="fa-solid fa-trash-can"></i></button>
         </div>
       </div>`;
     } else {
       resultHTML += `<div class="task">
-    <div>${taskList[i].taskContent}</div>
+    <div>${list[i].taskContent}</div>
     <div>
-      <button onclick="toggleComplete('${taskList[i].id}')" id ="done" class="enter"><i class="fa-solid fa-check"></i></button>
-      <button onclick="deleteTask('${taskList[i].id}')" class="enter"><i class="fa-solid fa-trash-can"></i></button>
+      <button onclick="toggleComplete('${list[i].id}')" id ="done" class="enter"><i class="fa-solid fa-check"></i></button>
+      <button onclick="deleteTask('${list[i].id}')" class="enter"><i class="fa-solid fa-trash-can"></i></button>
     </div>
   </div>`;
     }
@@ -59,6 +69,7 @@ function toggleComplete(id) {
   for (let i = 0; i < taskList.length; i++) {
     if (taskList[i].id === id) {
       taskList[i].isComplete = !taskList[i].isComplete;
+      break;
     }
   }
   render();
@@ -69,85 +80,46 @@ function deleteTask(id) {
   for (let i = 0; i < taskList.length; i++) {
     if (taskList[i].id === id) {
       taskList.splice(i, 1);
-      break;
     }
   }
   render();
 }
 
-// 1. 진행중 버튼을 누르면 모두리스트에서 isComplete가 false 인 task만 가져온다.
-// 2. 모두리스트에서 진행중이 아닌 끝난것으로 버튼을 누르면 진행중 리스트에서 일이 빠진다.
-// 3. 삭제버튼을 누르면 진행중 리스트에서 일이 빠진다.
-
-function doingTaskList() {
-  for (let i = 0; i < taskList.length; i++) {
-    if (
-      taskList[i].isComplete === false &&
-      doingArr.includes(taskList[i]) === false
-    ) {
-      doingArr.splice(i, 0, taskList[i]);
-    } else if (
-      taskList[i].isComplete === true &&
-      doingArr.includes(taskList[i])
-    ) {
-      doingArr = doingArr.filter(function (item) {
-        return item !== taskList[i];
-      });
+function filter(event) {
+  console.log("filter클릭댐", event.target.id);
+  mode = event.target.id;
+  filterList = [];
+  if (mode === "all") {
+    render();
+  } else if (mode === "ongoing") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete === false) {
+        filterList.push(taskList[i]);
+      }
     }
-  }
-  console.log(doingArr);
-  let resultHTML = "";
-  for (let i = 0; i < doingArr.length; i++) {
-    resultHTML += `<div class="task">
-        <div>${doingArr[i].taskContent}</div>
-       
-        <div>
-          <button onclick="toggleComplete('${doingArr[i].id}')" id="done" class="enter"><i class="fa-solid fa-arrow-rotate-right"></i></button>
-          <button onclick="deleteTask('${doingArr[i].id}')" class="enter"><i class="fa-solid fa-trash-can"></i></button>
-        </div>
-      </div>`;
-  }
-
-  document.getElementById("task-board").innerHTML = resultHTML;
-}
-
-function allTaskList() {
-  render();
-}
-
-function finishedTaskList() {
-  console.log("끝남");
-  for (let i = 0; i < taskList.length; i++) {
-    if (
-      taskList[i].isComplete === true &&
-      finishedArr.includes(taskList[i]) === false
-    ) {
-      finishedArr.splice(i, 0, taskList[i]);
-    } else if (
-      taskList[i].isComplete === false &&
-      finishedArr.includes(taskList[i])
-    ) {
-      finishedArr = finishedArr.filter(function (item) {
-        return item !== taskList[i];
-      });
+    render();
+  } else if (mode === "done") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete) {
+        filterList.push(taskList[i]);
+      }
     }
+    render();
   }
-  console.log(finishedArr);
-  let resultHTML = "";
-  for (let i = 0; i < finishedArr.length; i++) {
-    resultHTML += `<div class="task">
-            <div>${finishedArr[i].taskContent}</div>
-           
-            <div>
-              <button onclick="toggleComplete('${finishedArr[i].id}')" id="done" class="enter"><i class="fa-solid fa-arrow-rotate-right"></i></button>
-              <button onclick="deleteTask('${finishedArr[i].id}')" class="enter"><i class="fa-solid fa-trash-can"></i></button>
-            </div>
-          </div>`;
-  }
-
-  document.getElementById("task-board").innerHTML = resultHTML;
 }
 
 function randomIDGenerate() {
   return "_" + Math.random().toString(36).substr(2, 9);
+}
+
+function enter() {
+  if (window.event.keyCode === 13) {
+    addTask();
+    console.log("엔터!");
+    taskInput.value = "";
+  }
+}
+
+function blank() {
+  taskInput.value = "";
 }
